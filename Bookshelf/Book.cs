@@ -36,12 +36,30 @@ namespace Bookshelf
         }
 
         /// <summary>
+        /// Set book height
+        /// </summary>
+        /// <param name="hei">Height</param>
+        public void setHeight(double hei)
+        {
+            height = hei;
+        }
+
+        /// <summary>
         /// Get book wdth
         /// </summary>
         /// <returns>Width</returns>
         public double getWidth()
         {
             return width;
+        }
+
+        /// <summary>
+        /// Set book width
+        /// </summary>
+        /// <param name="">Width</param>
+        public void setWidth(double wid)
+        {
+            width = wid;
         }
 
         /// <summary>

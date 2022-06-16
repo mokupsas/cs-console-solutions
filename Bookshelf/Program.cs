@@ -45,6 +45,7 @@ namespace Bookshelf
             // Output data
             PrintData(books, bookshelf);
             PrintThinnest(books);
+            PrintBiggestPages(books);
         }
 
         static void PrintData(Book[] books, Bookshelf bs)
@@ -97,6 +98,25 @@ namespace Bookshelf
 
              Console.WriteLine(BookNameByKey(min_key) + " book is thinnest, one page " +
                  "thickness is " + books[min_key].getPageThickness());
+        }
+
+        static void PrintBiggestPages(Book[] books)
+        {
+            int min_key = -1;
+            double max_book_thickness = -1;
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (books[i].getBookThickness() > max_book_thickness)
+                {
+                    min_key = i;
+                    max_book_thickness = books[i].getPageThickness();
+                }
+
+            }
+
+            Console.WriteLine(BookNameByKey(min_key) + " book is thickest, with " +
+                books[min_key].getPages() + " pages");
         }
 
         static string BookNameByKey(int i)
