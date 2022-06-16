@@ -17,21 +17,7 @@ namespace Bookshelf
             {
                 int pages;
                 double height, width, thick;
-                string book_name;
-
-                // Get book name (first, second, etc.)
-                if(i==0)
-                {
-                    book_name = "First";
-                }
-                else if(i==1)
-                {
-                    book_name = "Second";
-                }
-                else
-                {
-                    book_name = "Third";
-                }
+                string book_name = BookNameByKey(i);
 
                 // Input first book data
                 Console.Write(book_name + " book number of pages: ");
@@ -58,31 +44,20 @@ namespace Bookshelf
 
             // Output data
             PrintData(books, bookshelf);
+            PrintThinnest(books);
         }
 
         static void PrintData(Book[] books, Bookshelf bs)
         {
             // Variables
-            string book_name;
+            
 
             Console.WriteLine("-------------------------------------" +
                             "---------------------------------------");
 
             for(int i=0; i<3; i++)
             {
-                // Get book name (first, second, etc.)
-                if (i == 0)
-                {
-                    book_name = "First";
-                }
-                else if (i == 1)
-                {
-                    book_name = "Second";
-                }
-                else
-                {
-                    book_name = "Third";
-                }
+                string book_name = BookNameByKey(i);
 
                 Console.WriteLine("| {0, -38} | {1, -31} |",
                     book_name + " book number of pages: ", books[i].getPages());
@@ -103,6 +78,45 @@ namespace Bookshelf
 
             Console.WriteLine("-------------------------------------" +
                             "---------------------------------------");
+        }
+
+        static void PrintThinnest(Book[] books)
+        {
+            int min_key = -1;
+            double min_thickness = 9999999;
+
+            for (int i=0; i<3; i++)
+            {
+                if(books[i].getPageThickness() < min_thickness)
+                {
+                    min_key = i;
+                    min_thickness = books[i].getPageThickness();
+                }
+
+            }
+
+             Console.WriteLine(BookNameByKey(min_key) + " book is thinnest, one page " +
+                 "thickness is " + books[min_key].getPageThickness());
+        }
+
+        static string BookNameByKey(int i)
+        {
+            string book_name;
+
+            if (i == 0)
+            {
+                book_name = "First";
+            }
+            else if (i == 1)
+            {
+                book_name = "Second";
+            }
+            else
+            {
+                book_name = "Third";
+            }
+
+            return book_name;
         }
     }
 }
