@@ -94,6 +94,10 @@ namespace Bookshelf
                             "---------------------------------------");
         }
 
+        /// <summary>
+        /// Print to console thinnest book and it's one page thickness
+        /// </summary>
+        /// <param name="books">Array of all books</param>
         static void PrintThinnest(Book[] books)
         {
             int min_key = -1;
@@ -113,6 +117,10 @@ namespace Bookshelf
                  "thickness is " + books[min_key].getPageThickness());
         }
 
+        /// <summary>
+        /// Print to console, how much pages thickest book has
+        /// </summary>
+        /// <param name="books">Array of all books</param>
         static void PrintBiggestPages(Book[] books)
         {
             int min_key = -1;
@@ -132,6 +140,11 @@ namespace Bookshelf
                 books[min_key].getPages() + " page(-s)");
         }
 
+        /// <summary>
+        /// Print to console, do books fit into bookshelf
+        /// </summary>
+        /// <param name="books">Array of all books</param>
+        /// <param name="bookshelf">Bookshelf object</param>
         static void PrintPutBooks(Book[] books, Bookshelf bookshelf)
         {
             bool fit_height = DoBooksFitHeight(books, bookshelf.getHeight());
@@ -221,23 +234,6 @@ namespace Bookshelf
             if(width >= books_width)
                 return true;
             return false;
-        }
-
-        /// <summary>
-        /// Count how much area all books take
-        /// </summary>
-        /// <param name="books">Array of all books</param>
-        /// <returns>Area</returns>
-        static double CountAllArea(Book[] books)
-        {
-            double area = 0;
-
-            for(int i=0; i<books.Length; i++)
-            {
-                area += books[i].getHeight() * books[i].getPages() * books[i].getPageThickness();
-            }
-
-            return area;
         }
 
         /// <summary>
