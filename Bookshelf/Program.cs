@@ -1,5 +1,20 @@
 ﻿using System;
 
+/*
+
+    Create a class Book that has variables for the number of pages in a book and the thickness of the book page
+    to store the thickness of the page. Three books have been selected for the bookshop. Find the book with the smallest page thickness and how much
+    pages the thickest book has.
+
+    Add a variable to the Book class to store the height of the book. Create a class Shelf that
+    has variables to store the height and length of a shelf. Will the three books all fit on the shelf?
+
+    Add a Shelf class using the Put() method that allows you to change the height and length of the shelf. Will the shelves fit all
+    all the books on the shelf if the height of the shelf is doubled? If the shelf length is
+    is increased twice?
+
+ */
+
 namespace Bookshelf
 {
     class Program
@@ -119,49 +134,97 @@ namespace Bookshelf
 
         static void PrintPutBooks(Book[] books, Bookshelf bookshelf)
         {
-            // Bookshelf space
-            double bs_area = bookshelf.getHeight() * bookshelf.getWidth();
-            // Space that all books take
-            double b_area = CountAllArea(books);
-            Console.WriteLine(b_area);
+            bool fit_height = DoBooksFitHeight(books, bookshelf.getHeight());
+            bool fit_width = DoBooksFitWidth(books, bookshelf.getWidth());
 
-            // If bookshelf space is enough
-            if(bs_area >= b_area)
+            // Bookshelf increase tracking variables
+            bool height_inc = false;
+            bool width_inc = false;
+
+            // If books doesn't fit height, expand twice
+            if(!fit_height)
+            {
+                height_inc = true;
+                bookshelf.setHeight(bookshelf.getHeight() * 2);
+
+                if(!(fit_height = DoBooksFitHeight(books, bookshelf.getHeight())))
+                {
+                    Console.WriteLine("Books doesn't fit into bookshelf with twice expanded height");
+                    return;
+                }    
+            }
+
+            // If books doesn't fit height, expand twice
+            if (!fit_width)
+            {
+                width_inc = true;
+                bookshelf.setWidth(bookshelf.getHeight() * 2);
+
+                if(!(fit_width = DoBooksFitWidth(books, bookshelf.getWidth())))
+                {
+                    Console.WriteLine("Books doesn't fit into bookshelf with twice expanded width");
+                    return;
+                }
+            }
+
+
+            if (height_inc && width_inc)
+            {
+                Console.WriteLine("All books fit into bookshelf with twice expanded height and width");
+            }
+            else if(!height_inc && width_inc)
+            {
+                Console.WriteLine("All books fit into bookshelf with twice expanded width");
+            }
+            else if(height_inc && !width_inc)
+            {
+                Console.WriteLine("All books fit into bookshelf with twice expanded height");
+            }
+            else 
             {
                 Console.WriteLine("All books fit into bookshelf");
-                return;
-            }
-
-            // If it doesn't fit, we double bookshelf height
-            bookshelf.setHeight(bookshelf.getHeight() * 2);
-            // Recounting bookshelf space
-            bs_area = bookshelf.getHeight() * bookshelf.getWidth();
-
-            // If bookshelf space is enough
-            if (bs_area >= b_area)
-            {
-                Console.WriteLine("All books fit into bookshelf with double height");
-                return;
-            }
-
-            // If it still doesn't fit, we double bookshelf width
-            bookshelf.setWidth(bookshelf.getWidth() * 2);
-            // Recounting bookshelf space
-            bs_area = bookshelf.getHeight() * bookshelf.getWidth();
-
-            if (bs_area >= b_area)
-            {
-                Console.WriteLine("All books fit into bookshelf with double height and width");
-            }
-            else
-            {
-                Console.WriteLine("Books doesn't fit into bookshelf after expanding " +
-                    "height and width twice");
             }
         }
 
         /// <summary>
-        /// Count how much area all books talr
+        /// Check if every book fits into given height
+        /// </summary>
+        /// <param name="books">Array of all books</param>
+        /// <param name="height"></param>
+        /// <returns>True if fits</returns>
+        static bool DoBooksFitHeight(Book[] books, double height)
+        {
+            for(int i=0; i<books.Length; i++)
+            {
+                if (books[i].getHeight() > height)
+                    return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Check if every book fits into given height
+        /// </summary>
+        /// <param name="books">Array of all books</param>
+        /// <param name="height"></param>
+        /// <returns>True if fits</returns>
+        static bool DoBooksFitWidth(Book[] books, double width)
+        {
+            double books_width = 0;
+
+            for (int i = 0; i < books.Length; i++)
+            {
+                books_width += books[i].getPages() * books[i].getPageThickness();
+            }
+
+            if(width >= books_width)
+                return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Count how much area all books take
         /// </summary>
         /// <param name="books">Array of all books</param>
         /// <returns>Area</returns>
